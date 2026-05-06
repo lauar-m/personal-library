@@ -27,7 +27,7 @@ def extract_cover(epub_path, cover_name):
     return False
 
 def _get_book_list():
-    files = sorted(os.listdir(BOOK_DIR))
+    files = sorted([f for f in os.listdir(BOOK_DIR) if f != ".gitkeep"])
     return {i: fname for i, fname in enumerate(files, start=1)}
 
 @app.route("/")
