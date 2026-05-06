@@ -1,172 +1,324 @@
 <!doctype html>
-<html>
+<html lang="pt-br">
   <head>
     <meta charset="UTF-8" />
     <title>Malu's Library</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0"
+    />
     <style>
       body {
         margin: 0;
-        font-family: Arial, sans-serif;
-        background: #fafafa;
+        padding: 0;
+        font-family: "MS Serif", "New York", "Palatino", serif;
+        background-color: #f9f7f1;
+        color: #333;
       }
 
       header {
-        background: white;
-        padding: 15px;
-        text-align: center;
+        background-color: #f4f1ea;
+        padding: 15px 10px;
+        border-bottom: 1px solid #d8d8d8;
+        box-shadow: 0 2px 2px rgba(0, 0, 0, 0.05);
+      }
+
+      header h1 {
+        margin: 0;
         font-size: 22px;
-        border-bottom: 1px solid #ddd;
-        position: sticky;
-        top: 0;
+        color: #382110;
+        font-weight: bold;
       }
 
-      .upload {
+      .upload-container {
+        background-color: #ffffff;
+        border: 1px solid #d7d7d7;
+        margin: 15px;
         padding: 15px;
+        border-radius: 4px;
         text-align: center;
-        background: #fff;
-        border-bottom: 1px solid #eee;
       }
 
-      .grid {
-        column-count: 2;
-        column-gap: 10px;
-        padding: 10px;
+      h2 {
+        font-size: 18px;
+        color: #382110;
+        margin: 0 0 15px 0;
+        text-align: left;
+        border-bottom: 1px solid #ebe8d5;
       }
 
-      .card {
-        background: white;
-        display: inline-block;
-        width: 100%;
-        margin: 0 0 10px;
-        padding: 12px;
-        box-sizing: border-box;
-        border-radius: 10px;
-        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
-      }
-
-      .card h3 {
-        font-size: 15px;
-        margin: 0 0 10px;
-        word-break: break-word;
+      #fileInput {
+        width: 0.1px;
+        height: 0.1px;
+        opacity: 0;
+        overflow: hidden;
+        position: absolute;
+        z-index: -1;
       }
 
       .btn {
+        background: #f4f1ea;
+        border: 1px solid #d6d0c0;
+        padding: 10px 15px;
+        border-radius: 3px;
+        color: #333;
+        font-size: 14px;
+        font-family: Arial, sans-serif;
+        cursor: pointer;
         display: inline-block;
-        padding: 6px 10px;
-        background: #e60023; /* pinterest-like */
-        color: white;
-        text-decoration: none;
-        border-radius: 20px;
-        font-size: 13px;
+        margin: 5px;
       }
 
-      .btn:active {
+      .btn-upload-confirm {
+        background-color: #377458;
+        border: 1px solid #2e604a;
+        color: #ffffff;
+        padding: 10px 15px;
+        border-radius: 3px;
+        font-size: 14px;
+        font-family: Arial, sans-serif;
+        font-weight: bold;
+        cursor: pointer;
+        display: inline-block;
+        margin: 5px;
+      }
+
+      .btn:active,
+      .btn-upload-confirm:active {
         opacity: 0.7;
+      }
+
+      #fileNameDisplay {
+        display: block;
+        font-size: 12px;
+        color: #777;
+        margin-top: 8px;
+        font-family: Arial, sans-serif;
+      }
+
+      .book-list {
+        padding: 10px;
+      }
+
+      .book-item {
+        background: #ffffff;
+        border-bottom: 1px solid #d7d7d7;
+        padding: 15px 10px;
+        overflow: hidden;
+      }
+
+      .book-cover-container {
+        width: 60px;
+        height: 90px;
+        float: left;
+        margin-right: 15px;
+        position: relative;
+        background: #e8e8e8;
+        border: 1px solid #ccc;
+        box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+      }
+
+      .book-cover-real {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: 2;
+      }
+
+      .book-cover-fake {
+        width: 100%;
+        height: 100%;
+        text-align: center;
+        line-height: 90px;
+        font-size: 10px;
+        color: #666;
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: 1;
+      }
+
+      .book-info {
+        float: left;
+        width: calc(100% - 100px);
+      }
+      .book-title {
+        font-size: 16px;
+        font-weight: bold;
+        color: #333;
+        margin-bottom: 8px;
+        display: block;
+      }
+
+      .btn-download {
+        background-color: #377458;
+        color: #ffffff !important;
+        padding: 6px 12px;
+        border-radius: 3px;
+        font-size: 13px;
+        text-decoration: none;
+        font-family: Arial, sans-serif;
+        display: inline-block;
+      }
+
+      .clearfix::after {
+        content: "";
+        clear: both;
+        display: table;
+      }
+
+      .btn-edit {
+        font-size: 11px;
+        color: #00635d;
+        text-decoration: underline;
+        margin-left: 10px;
+        cursor: pointer;
+        font-family: Arial;
+      }
+
+      .edit-input {
+        width: 90%;
+        padding: 5px;
+        font-family: Arial;
+        font-size: 14px;
+        border: 1px solid #ccc;
+        margin-bottom: 5px;
+      }
+
+      .edit-actions {
+        margin-bottom: 10px;
       }
     </style>
   </head>
-
   <body>
-    <header>Malu's Library</header>
+    <header>
+      <h1>Personal Library</h1>
+    </header>
 
-    <div class="upload">
-      <input type="file" id="fileInput" />
-      <button onclick="upload()">Upload</button>
+    <div class="upload-container">
+      <h2>Add to Shelf</h2>
+
+      <input type="file" id="fileInput" onchange="updateFileName()" />
+
+      <label for="fileInput" class="btn"> Choose File </label>
+
+      <button class="btn-upload-confirm" onclick="upload()">
+        Upload to Shelf
+      </button>
+
+      <span id="fileNameDisplay">No file selected</span>
     </div>
 
-    <div class="grid" id="grid"></div>
+    <div class="book-list" id="grid"></div>
 
     <script>
+      function updateFileName() {
+        var input = document.getElementById("fileInput");
+        var display = document.getElementById("fileNameDisplay");
+        if (input.files.length > 0) {
+          display.innerHTML = "Selected: " + input.files[0].name;
+        }
+      }
+
       function upload() {
         var input = document.getElementById("fileInput");
-        if (!input.files.length) {
-          alert("Selecione um arquivo para enviar.");
-          return;
-        }
-        var file = input.files[0];
+        if (!input.files.length) return alert("Please select a file first.");
+
         var formData = new FormData();
-        formData.append("file", file);
+        formData.append("file", input.files[0]);
 
         var xhr = new XMLHttpRequest();
         xhr.open("POST", "/upload", true);
-
         xhr.onload = function () {
           if (xhr.status === 201) {
-            alert("Upload realizado com sucesso!");
             window.location.reload();
           } else {
-            var msg = "Erro ao enviar arquivo";
-            try {
-              var resp = JSON.parse(xhr.responseText);
-              if (resp && resp.description) msg = resp.description;
-            } catch (e) {}
-            alert(msg);
+            alert("Error uploading.");
           }
         };
         xhr.send(formData);
       }
-    </script>
 
-    <script>
+      function showEdit(id, currentName) {
+        var infoDiv = document.getElementById("info-" + id);
+        var cleanName = currentName.replace(".epub", "").replace(".pdf", "");
+
+        infoDiv.innerHTML =
+          '<div class="edit-actions">' +
+          '<input type="text" class="edit-input" id="input-' +
+          id +
+          '" value="' +
+          cleanName +
+          '">' +
+          "<br>" +
+          '<button class="btn-download" style="background:#377458; margin-right:5px;" onclick="saveEdit(' +
+          id +
+          ')">Save</button>' +
+          '<button class="btn" style="padding:5px" onclick="window.location.reload()">Cancel</button>' +
+          "</div>";
+      }
+
+      function saveEdit(id) {
+        var newName = document.getElementById("input-" + id).value;
+        if (!newName) return alert("Name cannot be empty");
+
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", "/edit/" + id, true);
+        xhr.setRequestHeader("Content-Type", "application/json");
+        xhr.onload = function () {
+          if (xhr.status === 200) {
+            window.location.reload();
+          } else {
+            alert("Error renaming book");
+          }
+        };
+        xhr.send(JSON.stringify({ new_name: newName }));
+      }
+
       window.onload = function () {
         var xhr = new XMLHttpRequest();
         xhr.open("GET", "/books", true);
-
         xhr.onreadystatechange = function () {
-          if (xhr.readyState === 4) {
-            if (xhr.status !== 200) {
-              alert("Erro HTTP: " + xhr.status);
-              return;
-            }
-
-            var data;
-            try {
-              data = JSON.parse(xhr.responseText);
-            } catch (e) {
-              alert("Erro ao ler resposta");
-              return;
-            }
-
+          if (xhr.readyState === 4 && xhr.status === 200) {
+            var data = JSON.parse(xhr.responseText);
             var grid = document.getElementById("grid");
-            if (!grid) {
-              alert("Grid não encontrado");
-              return;
-            }
-
-            grid.innerHTML = "";
-
             var books = data.available_books;
-            if (!books) {
-              alert("Sem livros");
-              return;
-            }
 
-            var keys = Object.keys(books);
-
-            for (var i = 0; i < keys.length; i++) {
-              var id = keys[i];
+            for (var id in books) {
               var name = books[id];
+              var cleanName = name.replace(".epub", "").replace(".pdf", "");
 
-              var div = document.createElement("div");
-              div.className = "card";
+              var item = document.createElement("div");
+              item.className = "book-item clearfix";
 
-              var title = document.createElement("h3");
-              title.innerHTML = name;
-
-              var link = document.createElement("a");
-              link.className = "btn";
-              link.href = "/download/" + id;
-              link.innerHTML = "Baixar";
-
-              div.appendChild(title);
-              div.appendChild(link);
-              grid.appendChild(div);
+              item.innerHTML =
+                '<div class="book-cover-container">' +
+                '<img class="book-cover-real" src="/cover/' +
+                id +
+                '" onerror="this.style.display=\'none\';">' +
+                '<div class="book-cover-fake">BOOK</div>' +
+                "</div>" +
+                '<div class="book-info" id="info-' +
+                id +
+                '">' +
+                '<span class="book-title">' +
+                cleanName +
+                '<span class="btn-edit" onclick="showEdit(' +
+                id +
+                ", '" +
+                name +
+                "')\">edit</span>" +
+                "</span>" +
+                '<a href="/download/' +
+                id +
+                '" class="btn-download">Download</a>' +
+                "</div>";
+              grid.appendChild(item);
             }
           }
         };
-
         xhr.send();
       };
     </script>

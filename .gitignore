@@ -216,3 +216,11 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# Ignora todo o conteúdo das pastas
+books/*
+covers/*
+
+# Abre uma exceção para o arquivo .gitkeep
+!books/.gitkeep
+!covers/.gitkeep
